@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="CabinetStomatologic.Views.AdminView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:views="clr-namespace:CabinetStomatologic.Views"
+             xmlns:viewmodels="clr-namespace:CabinetStomatologic.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800" Background="#04c582">
+
+
+
+    <UserControl.Resources>
+        <DataTemplate x:Name="PrivilegesView" DataType="{x:Type viewmodels:PrivilegesViewModel}">
+            <views:PrivilegesView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="InterventionsView" DataType="{x:Type viewmodels:InterventionsViewModel}">
+            <views:InterventionsView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="MediciView" DataType="{x:Type viewmodels:MediciViewModel}">
+            <views:MediciView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="AddMedicView" DataType="{x:Type viewmodels:AddMedicViewModel}">
+            <views:AddMedicView DataContext="{Binding}"/>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Border Background="#2e3137" Margin="6" CornerRadius="10 0 0 10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="100"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <DockPanel Background="#24272b" Grid.Row="0" Grid.RowSpan="6" Grid.Column="3">
+                <StackPanel>
+                    <Button x:Name="PrivilegesBtn" Content="Privilegii" Margin="6" Background="#545d6a" Foreground="White" FontSize="18" Click="PrivilegesBtn_Click"/>
+                    <Button x:Name="InterventiiBtn" Content="Interventii" Margin="6" Background="#545d6a" Foreground="White" FontSize="18" Click="InterventiiBtn_Click"/>
+                    <Button x:Name="Medici" Content="Medici" Margin="6" Background="#545d6a" Foreground="White" FontSize="18" Click="MediciBtn_Click"/>
+                    <Button x:Name="AddMedic" Content="AddMedic" Margin="6" Background="#545d6a" Foreground="White" FontSize="18" Click="AddMedicBtn_Click"/>
+
+                </StackPanel>
+            </DockPanel>
+
+
+            <ContentControl Grid.Column="0" Content="{Binding}"></ContentControl>
+
+        </Grid>
+    </Border>
+</UserControl>

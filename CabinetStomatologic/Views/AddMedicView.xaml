@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="CabinetStomatologic.Views.AddMedicView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CabinetStomatologic.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="620" Background="#04c582">
+
+    <Border Background="#2e3137" CornerRadius="10 0 0 10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+
+            <DataGrid Margin="16" x:Name="UsersMedici" ItemsSource="{Binding UsersDataTable}" AutoGenerateColumns="False" Grid.Row="2" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="1">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding ID}"/>
+                    <DataGridTextColumn Header="UserName" Binding="{Binding UserName}"/>
+                    <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            
+            <Label FontSize="32" Margin="16" Foreground="White" Content="Nume: " HorizontalAlignment="Right" Grid.Column="0" Grid.Row="0"></Label>
+            <Label FontSize="32" Margin="16" Foreground="White" Content="Prenume: " HorizontalAlignment="Right" Grid.Column="0" Grid.Row="1"></Label>
+            
+            <TextBox Text="{Binding Nume}" Grid.Row="0" Grid.Column="1" Margin="30"></TextBox>
+            <TextBox Text="{Binding Prenume}" Grid.Row="1" Grid.Column="1" Margin="30"></TextBox>
+
+            <Button x:Name="LoadUsers" Command="{Binding LoadUsersCommand}" Content="   Load   " Grid.Column="0" Grid.Row="4" Margin="24" HorizontalAlignment="Center" Background="#545d6a" Foreground="White" FontSize="18"></Button>
+
+            <Label FontSize="32" Margin="16" Foreground="White" Content="Add: " HorizontalAlignment="Left" Grid.Column="1" Grid.Row="3"></Label>
+            <TextBox Text="{Binding Add}" Grid.Row="3" Grid.Column="1" Margin="200 30 60 30"></TextBox>
+
+            <Button x:Name="AddMedicBtn" Command="{Binding AddMedicCommand}" Content="   Add   " Grid.Column="1" Grid.Row="4" Margin="24" HorizontalAlignment="Center" Background="#545d6a" Foreground="White" FontSize="18"></Button>
+
+        </Grid>
+    </Border>
+</UserControl>
