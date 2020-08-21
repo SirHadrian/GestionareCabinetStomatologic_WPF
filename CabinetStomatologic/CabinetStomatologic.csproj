@@ -87,6 +87,7 @@
     </Compile>
     <Compile Include="ViewModels\AddMedicViewModel.cs" />
     <Compile Include="ViewModels\AddPacientViewModel.cs" />
+    <Compile Include="ViewModels\AddProgramareViewModel.cs" />
     <Compile Include="ViewModels\AdminViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CreateAccountViewModel.cs" />
@@ -97,11 +98,15 @@
     <Compile Include="ViewModels\MedicViewModel.cs" />
     <Compile Include="ViewModels\PacientiViewModel.cs" />
     <Compile Include="ViewModels\PrivilegesViewModel.cs" />
+    <Compile Include="ViewModels\ProgramariViewModel.cs" />
     <Compile Include="Views\AddMedicView.xaml.cs">
       <DependentUpon>AddMedicView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AddPacientView.xaml.cs">
       <DependentUpon>AddPacientView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddProgramareView.xaml.cs">
+      <DependentUpon>AddProgramareView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AdminView.xaml.cs">
       <DependentUpon>AdminView.xaml</DependentUpon>
@@ -136,6 +141,9 @@
     <Compile Include="Views\PrivilegesView.xaml.cs">
       <DependentUpon>PrivilegesView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ProgramariView.xaml.cs">
+      <DependentUpon>ProgramariView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -154,6 +162,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddPacientView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddProgramareView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -198,6 +210,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PrivilegesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProgramariView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

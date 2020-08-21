@@ -36,5 +36,15 @@ namespace CabinetStomatologic.Views
         {
             DataContext = new PacientiViewModel();
         }
+
+        private void ProgramariBtn_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new ProgramariViewModel();
+        }
+
+        private void AddProgramareBtn_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new AddProgramareViewModel();
+        }
     }
 }

@@ -16,6 +16,12 @@
         <DataTemplate x:Name="PacientiView" DataType="{x:Type vm:PacientiViewModel}">
             <views:PacientiView DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate x:Name="ProgramariView" DataType="{x:Type vm:ProgramariViewModel}">
+            <views:ProgramariView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="AddProgramariView" DataType="{x:Type vm:AddProgramareViewModel}">
+            <views:AddProgramareView DataContext="{Binding}"/>
+        </DataTemplate>
     </UserControl.Resources>
 
     <Border Background="#2e3137" Margin="6" CornerRadius="10 0 0 10">
@@ -28,7 +34,9 @@
             <DockPanel Background="#24272b" Grid.Row="0" Grid.RowSpan="6" Grid.Column="3">
                 <StackPanel>
                     <Button x:Name="Pacienti" Content="Pacienti" Margin="6" Background="#545d6a" Foreground="White" FontSize="18" Click="PacientiBtn_Click"/>
-                    <Button x:Name="AddPacient" Content="AddPacient" Margin="6" Background="#545d6a" Foreground="White" FontSize="18" Click="AddPacientBtn_Click"/>
+                    <Button x:Name="AddPacient" Content="Pacient+" Margin="6" Background="#545d6a" Foreground="White" FontSize="18" Click="AddPacientBtn_Click"/>
+                    <Button x:Name="Programari" Content="Program" Margin="6" Background="#545d6a" Foreground="White" FontSize="18" Click="ProgramariBtn_Click"/>
+                    <Button x:Name="AddProgramare" Content="Program+" Margin="6" Background="#545d6a" Foreground="White" FontSize="18" Click="AddProgramareBtn_Click"/>
 
                 </StackPanel>
             </DockPanel>

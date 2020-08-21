@@ -92,6 +92,9 @@ namespace CabinetStomatologic.ViewModels
             {
                 MessageBox.Show("Something went wrong");
             }
+
+            System.Windows.MessageBox.Show("Pacient Added!", "AddPacient", MessageBoxButton.OK, MessageBoxImage.Information);
+
         }
 
         private ICommand _addPacient;

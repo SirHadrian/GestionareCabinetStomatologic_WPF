@@ -60,7 +60,7 @@ namespace CabinetStomatologic.ViewModels
 
 
             SqlConnection con = new SqlConnection(regularConnectionString);
-            string querry = "SELECT ID, Interventie, Pret FROM Interventii;";
+            string querry = "SELECT Interventie, Pret, Activ FROM Interventii;";
 
             sda = new SqlDataAdapter(querry, con);
             dt = new DataTable();
@@ -95,49 +95,6 @@ namespace CabinetStomatologic.ViewModels
                 if (_updateInterventions == null)
                     _updateInterventions = new RelayCommand(UpdateInterventions);
                 return _updateInterventions;
-            }
-        }
-
-
-        public void DeleteIntervention(object param)
-        {
-            if (DeleteThis == null)
-            {
-                System.Windows.MessageBox.Show("Insert ID", "Interventii", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            string conectionStringEF = ConfigurationManager.ConnectionStrings["CabinetStomatologicEntities"].ConnectionString;
-
-            var builder = new EntityConnectionStringBuilder(conectionStringEF);
-            var regularConnectionString = builder.ProviderConnectionString;
-
-            using (SqlConnection con = new SqlConnection(regularConnectionString))
-            {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand("InterventiiDel", con))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    cmd.Parameters.AddWithValue("@interventie", DeleteThis);
-
-                    cmd.ExecuteNonQuery();
-                }
-                con.Close();
-            }
-            DeleteThis = null;
-            System.Windows.MessageBox.Show("Intervention Deleted!", "Interventii", MessageBoxButton.OK, MessageBoxImage.Information);
-            //Debug.WriteLine("Executed");
-        }
-
-        private ICommand _deleteIntervention;
-        public ICommand DeleteInterventionCommand
-        {
-            get
-            {
-                if (_deleteIntervention == null)
-                    _deleteIntervention = new RelayCommand(DeleteIntervention);
-                return _deleteIntervention;
             }
         }
         //=======================

@@ -37,7 +37,7 @@
             <TextBox Text="{Binding Nume}" Grid.Row="0" Grid.Column="1" Margin="30"></TextBox>
             <TextBox Text="{Binding Prenume}" Grid.Row="1" Grid.Column="1" Margin="30"></TextBox>
 
-            <Button x:Name="LoadUsers" Command="{Binding LoadUsersCommand}" Content="   Load   " Grid.Column="0" Grid.Row="4" Margin="24" HorizontalAlignment="Center" Background="#545d6a" Foreground="White" FontSize="18"></Button>
+            <Button Command="{Binding LoadUsersCommand}" Content="   Load   " Grid.Column="0" Grid.Row="4" Margin="24" HorizontalAlignment="Center" Background="#545d6a" Foreground="White" FontSize="18"></Button>
 
             <Label FontSize="32" Margin="16" Foreground="White" Content="Add: " HorizontalAlignment="Left" Grid.Column="1" Grid.Row="3"></Label>
             <TextBox Text="{Binding Add}" Grid.Row="3" Grid.Column="1" Margin="200 30 60 30"></TextBox>
