@@ -60,7 +60,7 @@ namespace CabinetStomatologic.ViewModels
 
 
             SqlConnection con = new SqlConnection(regularConnectionString);
-            string querry = "SELECT Interventie, Pret, Activ FROM Interventii;";
+            string querry = "SELECT ID, Interventie, Pret, Activ FROM Interventii;";
 
             sda = new SqlDataAdapter(querry, con);
             dt = new DataTable();

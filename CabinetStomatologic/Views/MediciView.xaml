@@ -35,6 +35,10 @@
             <Button x:Name="LoadMediciBtn" Command="{Binding LoadMediciCommand}" Content="   Load   " Grid.Column="0" Grid.Row="4" Margin="24" HorizontalAlignment="Center" Background="#545d6a" Foreground="White" FontSize="18"></Button>
             <Button x:Name="UpdateMediciBtn" Command="{Binding UpdateMediciCommand}" Content="   Update   " Grid.Column="2" Grid.Row="4" Margin="24" HorizontalAlignment="Center" Background="#545d6a" Foreground="White" FontSize="18"></Button>
 
+            <Button Command="{Binding DeleteMedicCommand}" x:Name="DeleteMedicBtn" Content="   Delete   " Grid.Column="1" Grid.Row="3" Margin="24" HorizontalAlignment="Center" Background="#545d6a" Foreground="White" FontSize="18"></Button>
+            <Label Content="ID: " Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="18" Foreground="White" FontSize="30"></Label>
+
+            <TextBox Text="{Binding DeleteThis}" Grid.Row="3" Grid.Column="1" Margin="30 30 240 30"></TextBox>
         </Grid>
     </Border>
 </UserControl>

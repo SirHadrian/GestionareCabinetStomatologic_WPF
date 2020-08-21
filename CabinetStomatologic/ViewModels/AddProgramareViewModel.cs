@@ -21,6 +21,8 @@ namespace CabinetStomatologic.ViewModels
         //SqlCommandBuilder scb;
         DataTable dt;
 
+        int ID;
+
         public AddProgramareViewModel()
         {
             StartDate = DateTime.Now;
@@ -123,9 +125,11 @@ namespace CabinetStomatologic.ViewModels
                     con.Close();
                 }
             }
-            catch
+            catch(Exception e)
             {
                 System.Windows.MessageBox.Show("Incorect values");
+                Debug.WriteLine(e);
+                return;
             }
             System.Windows.MessageBox.Show("Programare added!", "AddProgramare", MessageBoxButton.OK, MessageBoxImage.Information);
 
@@ -150,14 +154,32 @@ namespace CabinetStomatologic.ViewModels
             var builder = new EntityConnectionStringBuilder(conectionStringEF);
             var regularConnectionString = builder.ProviderConnectionString;
 
-            SqlConnection con = new SqlConnection(regularConnectionString);
-            string querry = "SELECT ID, Nume, Prenume, ID_Medic FROM Pacienti;";
 
-            sda = new SqlDataAdapter(querry, con);
-            dt = new DataTable();
-            sda.Fill(dt);
+            using (SqlConnection con = new SqlConnection(regularConnectionString))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("getID", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-            PacientiDataTable = dt;
+                    cmd.Parameters.AddWithValue("@username", Props.CurentUser);
+
+                    ID = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    
+                }
+
+                string querry = @"SELECT ID, Nume, Prenume, ID_Medic FROM Pacienti
+                            WHERE Pacienti.ID_Medic = (SELECT ID FROM Medici WHERE ID_User = " + ID + ");";
+
+                sda = new SqlDataAdapter(querry, con);
+                dt = new DataTable();
+                sda.Fill(dt);
+
+                PacientiDataTable = dt;
+
+                con.Close();
+            }
         }
 
         private ICommand _loadPacienti;

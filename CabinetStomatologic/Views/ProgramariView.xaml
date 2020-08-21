@@ -25,16 +25,19 @@
 
             <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Foreground="White" FontSize="40" Content="{Binding Welcome}"></Label>
 
-            <DataGrid Margin="16" x:Name="UsersMedici" ItemsSource="{Binding }" AutoGenerateColumns="False" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2">
+            <DataGrid Margin="16" IsReadOnly="True" ItemsSource="{Binding ProgramariDataTable}" AutoGenerateColumns="False" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding ID}"/>
-                    <DataGridTextColumn Header="UserName" Binding="{Binding UserName}"/>
-                    <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
+                    <DataGridTextColumn Header="DataProgramarii" Binding="{Binding DataProgramarii}"/>
+                    <DataGridTextColumn Header="Nume" Binding="{Binding Nume}"/>
+                    <DataGridTextColumn Header="Prenume" Binding="{Binding Prenume}"/>
+                    <DataGridTextColumn Header="Interventie" Binding="{Binding Interventie}"/>
+                    <DataGridTextColumn Header="Pret" Binding="{Binding Pret}"/>
                 </DataGrid.Columns>
             </DataGrid>
 
 
-            <Button Command="{Binding }" Content="   Load   " Grid.Column="1" Grid.Row="4" Margin="24" HorizontalAlignment="Center" Background="#545d6a" Foreground="White" FontSize="18"></Button>
+            <Button Command="{Binding LoadProgramariCommand}" Content="   Load   " Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Margin="24" HorizontalAlignment="Center" Background="#545d6a" Foreground="White" FontSize="18"></Button>
 
         </Grid>
     </Border>
