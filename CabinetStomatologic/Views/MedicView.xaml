@@ -7,7 +7,7 @@
              xmlns:views="clr-namespace:CabinetStomatologic.Views"
              xmlns:vm="clr-namespace:CabinetStomatologic.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="#04c582">
+             d:DesignHeight="450" d:DesignWidth="800" Background="#8DB4D0">
 
     <UserControl.Resources>
         <DataTemplate x:Name="AddPacientView" DataType="{x:Type vm:AddPacientViewModel}">

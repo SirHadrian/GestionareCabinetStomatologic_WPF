@@ -48,7 +48,7 @@
             </StackPanel>
         </DockPanel>
 
-        <Label Grid.Row="7" Grid.Column="0" Content="{Binding CurentUser}" Margin="2" Foreground="LightGreen" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+        <Label Grid.Row="7" Grid.Column="0" Content="{Binding CurentUser}" Margin="2" Foreground="#8DB4D0" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
 
         <ContentControl Grid.Column="1" Grid.Row="0" Grid.RowSpan="7" Content="{Binding}"></ContentControl>
     </Grid>

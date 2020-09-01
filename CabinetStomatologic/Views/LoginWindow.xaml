@@ -7,7 +7,7 @@
         xmlns:viewmodels="clr-namespace:CabinetStomatologic.ViewModels"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="Login" Height="487.943" Width="385.189" FontSize="14" Background="#04c582">
+        Title="Login" Height="487.943" Width="385.189" FontSize="14" Background="#8DB4D0">
 
     <Window.Resources>
         <DataTemplate x:Name="LoginViewModel" DataType="{x:Type viewmodels:LoginViewModel}">

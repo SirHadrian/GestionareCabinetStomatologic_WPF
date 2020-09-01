@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.Entity.Core.EntityClient;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -88,9 +89,11 @@ namespace CabinetStomatologic.ViewModels
                     con.Close();
                 }
             }
-            catch
+            catch(Exception e)
             {
                 MessageBox.Show("Something went wrong");
+                Debug.WriteLine(e);
+                return;
             }
 
             System.Windows.MessageBox.Show("Pacient Added!", "AddPacient", MessageBoxButton.OK, MessageBoxImage.Information);
