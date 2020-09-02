@@ -28,23 +28,21 @@ namespace CabinetStomatologic.Models.Actions
 
         public void CreateAccount(object param)
         {
-            CreateAccountViewModel _createAccountViewModelParam = param as CreateAccountViewModel;
-
-            if (_createAccountViewModelParam.UserName == null || _createAccountViewModelParam.EmailAdress == null 
-                || _createAccountViewModelParam.Password_1 == null ||
-                _createAccountViewModelParam.Password_2 == null)
+            if (_createAccountViewModel.UserName == null || _createAccountViewModel.EmailAdress == null 
+                || _createAccountViewModel.Password_1 == null ||
+                _createAccountViewModel.Password_2 == null)
             {
                 MessageBox.Show("All fields must be completed!");
                 return;
             }
 
-            if (!Tools.IsValidEmail(_createAccountViewModelParam.EmailAdress))
+            if (!Tools.IsValidEmail(_createAccountViewModel.EmailAdress))
             {
                 MessageBox.Show("Email invalid");
                 return;
             }
 
-            if (_createAccountViewModelParam.Password_1 != _createAccountViewModelParam.Password_2)
+            if (_createAccountViewModel.Password_1 != _createAccountViewModel.Password_2)
             {
                 MessageBox.Show("Passwords don't match");
                 return;
@@ -62,8 +60,8 @@ namespace CabinetStomatologic.Models.Actions
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("@username", _createAccountViewModelParam.UserName);
-                    cmd.Parameters.AddWithValue("@email", _createAccountViewModelParam.EmailAdress);
+                    cmd.Parameters.AddWithValue("@username", _createAccountViewModel.UserName);
+                    cmd.Parameters.AddWithValue("@email", _createAccountViewModel.EmailAdress);
 
                     int status = Convert.ToInt32(cmd.ExecuteScalar());
 
@@ -77,9 +75,9 @@ namespace CabinetStomatologic.Models.Actions
                         using (SqlCommand cmd2 = new SqlCommand("NewUser", con))
                         {
                             cmd2.CommandType = CommandType.StoredProcedure;
-                            cmd2.Parameters.AddWithValue("@username", _createAccountViewModelParam.UserName);
-                            cmd2.Parameters.AddWithValue("@email", _createAccountViewModelParam.EmailAdress);
-                            cmd2.Parameters.AddWithValue("@password", _createAccountViewModelParam.Password_1);
+                            cmd2.Parameters.AddWithValue("@username", _createAccountViewModel.UserName);
+                            cmd2.Parameters.AddWithValue("@email", _createAccountViewModel.EmailAdress);
+                            cmd2.Parameters.AddWithValue("@password", _createAccountViewModel.Password_1);
                             cmd2.Parameters.AddWithValue("@medic", 0);
                             cmd2.Parameters.AddWithValue("@admin", 0);
 

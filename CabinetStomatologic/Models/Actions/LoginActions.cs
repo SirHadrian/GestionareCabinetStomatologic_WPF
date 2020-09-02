@@ -25,51 +25,45 @@ namespace CabinetStomatologic.Models.Actions
 
         public void Join(object param)
         {
-            LoginViewModel _loginViewModelParam = param as LoginViewModel;
-
-            _loginViewModelParam.LoginLabel = Visibility.Collapsed;
-            _loginViewModelParam.UserNameLabel = Visibility.Collapsed;
-            _loginViewModelParam.UserNameBox = Visibility.Collapsed;
-            _loginViewModelParam.PasswordLabel = Visibility.Collapsed;
-            _loginViewModelParam.PasswordBox = Visibility.Collapsed;
-            _loginViewModelParam.BtnJoin = Visibility.Collapsed;
-            _loginViewModelParam.BtnLogin = Visibility.Collapsed;
-            _loginViewModelParam.Spacer = Visibility.Collapsed;
+            _loginViewModel.LoginLabel = Visibility.Collapsed;
+            _loginViewModel.UserNameLabel = Visibility.Collapsed;
+            _loginViewModel.UserNameBox = Visibility.Collapsed;
+            _loginViewModel.PasswordLabel = Visibility.Collapsed;
+            _loginViewModel.PasswordBox = Visibility.Collapsed;
+            _loginViewModel.BtnJoin = Visibility.Collapsed;
+            _loginViewModel.BtnLogin = Visibility.Collapsed;
+            _loginViewModel.Spacer = Visibility.Collapsed;
 
 
-            _loginViewModelParam.JoinLabel = Visibility.Visible;
-            _loginViewModelParam.BtnBack = Visibility.Visible;
-            _loginViewModelParam.BtnCreateAccount = Visibility.Visible;
-            _loginViewModelParam.BtnGuest = Visibility.Visible;
+            _loginViewModel.JoinLabel = Visibility.Visible;
+            _loginViewModel.BtnBack = Visibility.Visible;
+            _loginViewModel.BtnCreateAccount = Visibility.Visible;
+            _loginViewModel.BtnGuest = Visibility.Visible;
         }
 
 
         public void Back(object param)
         {
-            LoginViewModel _loginViewModelParam = param as LoginViewModel;
-
-            _loginViewModelParam.LoginLabel = Visibility.Visible;
-            _loginViewModelParam.UserNameLabel = Visibility.Visible;
-            _loginViewModelParam.UserNameBox = Visibility.Visible;
-            _loginViewModelParam.PasswordLabel = Visibility.Visible;
-            _loginViewModelParam.PasswordBox = Visibility.Visible;
-            _loginViewModelParam.BtnJoin = Visibility.Visible;
-            _loginViewModelParam.BtnLogin = Visibility.Visible;
-            _loginViewModelParam.Spacer = Visibility.Visible;
+            _loginViewModel.LoginLabel = Visibility.Visible;
+            _loginViewModel.UserNameLabel = Visibility.Visible;
+            _loginViewModel.UserNameBox = Visibility.Visible;
+            _loginViewModel.PasswordLabel = Visibility.Visible;
+            _loginViewModel.PasswordBox = Visibility.Visible;
+            _loginViewModel.BtnJoin = Visibility.Visible;
+            _loginViewModel.BtnLogin = Visibility.Visible;
+            _loginViewModel.Spacer = Visibility.Visible;
 
 
-            _loginViewModelParam.JoinLabel = Visibility.Hidden;
-            _loginViewModelParam.BtnBack = Visibility.Hidden;
-            _loginViewModelParam.BtnCreateAccount = Visibility.Hidden;
-            _loginViewModelParam.BtnGuest = Visibility.Hidden;
+            _loginViewModel.JoinLabel = Visibility.Hidden;
+            _loginViewModel.BtnBack = Visibility.Hidden;
+            _loginViewModel.BtnCreateAccount = Visibility.Hidden;
+            _loginViewModel.BtnGuest = Visibility.Hidden;
         }
 
 
         public void Login(object param)
         {
-            LoginViewModel _loginViewModelParam = param as LoginViewModel;
-
-            if (_loginViewModelParam.UserName == null || _loginViewModelParam.Password == null)
+            if (_loginViewModel.UserName == null || _loginViewModel.Password == null)
             {
                 MessageBox.Show("UserName or Password missing!");
                 return;
@@ -87,7 +81,7 @@ namespace CabinetStomatologic.Models.Actions
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("@Username", _loginViewModelParam.UserName);
+                    cmd.Parameters.AddWithValue("@Username", _loginViewModel.UserName);
 
 
                     int status = Convert.ToInt32(cmd.ExecuteScalar());
@@ -108,14 +102,14 @@ namespace CabinetStomatologic.Models.Actions
                 using (SqlCommand cmd = new SqlCommand("Login", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Username", _loginViewModelParam.UserName);
-                    cmd.Parameters.AddWithValue("@Password", _loginViewModelParam.Password);
+                    cmd.Parameters.AddWithValue("@Username", _loginViewModel.UserName);
+                    cmd.Parameters.AddWithValue("@Password", _loginViewModel.Password);
 
                     int status = Convert.ToInt32(cmd.ExecuteScalar());
 
                     if (status == 1)
                     {
-                        Props.CurentUser = _loginViewModelParam.UserName;
+                        Props.CurentUser = _loginViewModel.UserName;
 
                         Main main = new Main();
                         main.Show();

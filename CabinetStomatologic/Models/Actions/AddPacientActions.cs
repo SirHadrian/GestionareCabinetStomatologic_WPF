@@ -29,8 +29,6 @@ namespace CabinetStomatologic.Models.Actions
 
         public void Add(object param)
         {
-            AddPacientViewModel _addPacientViewModelParam = param as AddPacientViewModel;
-
             string conectionStringEF = ConfigurationManager.ConnectionStrings["CabinetStomatologicEntities"].ConnectionString;
             var builder = new EntityConnectionStringBuilder(conectionStringEF);
             var regularConnectionString = builder.ProviderConnectionString;
@@ -44,8 +42,8 @@ namespace CabinetStomatologic.Models.Actions
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        cmd.Parameters.AddWithValue("@nume", _addPacientViewModelParam.Nume);
-                        cmd.Parameters.AddWithValue("@prenume", _addPacientViewModelParam.Prenume);
+                        cmd.Parameters.AddWithValue("@nume", _addPacientViewModel.Nume);
+                        cmd.Parameters.AddWithValue("@prenume", _addPacientViewModel.Prenume);
                         cmd.Parameters.AddWithValue("@medic", Props.CurentUser);
 
                         cmd.ExecuteNonQuery();

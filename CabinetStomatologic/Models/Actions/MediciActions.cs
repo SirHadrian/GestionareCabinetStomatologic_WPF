@@ -29,8 +29,6 @@ namespace CabinetStomatologic.Models.Actions
 
         public void LoadMedici(object param)
         {
-            //MediciViewModel _mediciViewModelParam = param as MediciViewModel;
-
             string conectionStringEF = ConfigurationManager.ConnectionStrings["CabinetStomatologicEntities"].ConnectionString;
             var builder = new EntityConnectionStringBuilder(conectionStringEF);
             var regularConnectionString = builder.ProviderConnectionString;
@@ -56,9 +54,7 @@ namespace CabinetStomatologic.Models.Actions
 
         public void DeleteMedic(object param)
         {
-            MediciViewModel _mediciViewModelParam = param as MediciViewModel;
-
-            if (_mediciViewModelParam.DeleteThis == null)
+            if (_mediciViewModel.DeleteThis == null)
             {
                 MessageBox.Show("Insert a value");
                 return;
@@ -77,7 +73,7 @@ namespace CabinetStomatologic.Models.Actions
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        cmd.Parameters.AddWithValue("@id", _mediciViewModelParam.DeleteThis);
+                        cmd.Parameters.AddWithValue("@id", _mediciViewModel.DeleteThis);
 
                         cmd.ExecuteNonQuery();
                     }

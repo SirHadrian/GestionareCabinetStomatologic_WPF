@@ -53,9 +53,7 @@ namespace CabinetStomatologic.Models.Actions
 
         public void DeleteUser(object param)
         {
-            PrivilegesViewModel _privilegesViewModelParam = param as PrivilegesViewModel;
-
-            if (_privilegesViewModelParam.DeleteThis == null)
+            if (_privilegesViewModel.DeleteThis == null)
             {
                 System.Windows.MessageBox.Show("Insert ID", "Privileges", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -73,7 +71,7 @@ namespace CabinetStomatologic.Models.Actions
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("@userDel", _privilegesViewModelParam.DeleteThis);
+                    cmd.Parameters.AddWithValue("@userDel", _privilegesViewModel.DeleteThis);
 
                     cmd.ExecuteNonQuery();
                 }

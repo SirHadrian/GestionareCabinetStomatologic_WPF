@@ -26,9 +26,6 @@ namespace CabinetStomatologic.Models.Actions
 
         public void LoadInterventions(object param)
         {
-            //InterventionsViewModel interventionsViewModelParam = param as InterventionsViewModel;
-
-
             string conectionStringEF = ConfigurationManager.ConnectionStrings["CabinetStomatologicEntities"].ConnectionString;
             var builder = new EntityConnectionStringBuilder(conectionStringEF);
             var regularConnectionString = builder.ProviderConnectionString;
@@ -47,8 +44,6 @@ namespace CabinetStomatologic.Models.Actions
 
         public void UpdateInterventions(object param)
         {
-            //InterventionsViewModel interventionsViewModelParam = param as InterventionsViewModel;
-
             _scb = new SqlCommandBuilder(_sda);
             _sda.Update(_interventionsViewModel.InterventionsDataTable);
         }

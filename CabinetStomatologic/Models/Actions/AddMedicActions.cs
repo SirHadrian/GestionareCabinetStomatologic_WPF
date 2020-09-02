@@ -47,9 +47,7 @@ namespace CabinetStomatologic.Models.Actions
 
         public void AddMedic(object param)
         {
-            AddMedicViewModel _addMedicViewModelParam = param as AddMedicViewModel;
-
-            if (_addMedicViewModelParam.Add == null)
+            if (_addMedicViewModel.Add == null)
             {
                 MessageBox.Show("Insert an ID");
                 return;
@@ -69,9 +67,9 @@ namespace CabinetStomatologic.Models.Actions
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        cmd.Parameters.AddWithValue("@nume", _addMedicViewModelParam.Nume);
-                        cmd.Parameters.AddWithValue("@prenume", _addMedicViewModelParam.Prenume);
-                        cmd.Parameters.AddWithValue("@id_user", _addMedicViewModelParam.Add);
+                        cmd.Parameters.AddWithValue("@nume", _addMedicViewModel.Nume);
+                        cmd.Parameters.AddWithValue("@prenume", _addMedicViewModel.Prenume);
+                        cmd.Parameters.AddWithValue("@id_user", _addMedicViewModel.Add);
 
                         cmd.ExecuteNonQuery();
                     }

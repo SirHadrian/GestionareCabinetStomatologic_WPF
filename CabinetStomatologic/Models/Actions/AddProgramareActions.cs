@@ -28,8 +28,6 @@ namespace CabinetStomatologic.Models.Actions
 
         public void AddProgramare(object param)
         {
-            AddProgramareViewModel _addProgramareViewModelParam = param as AddProgramareViewModel;
-
             string conectionStringEF = ConfigurationManager.ConnectionStrings["CabinetStomatologicEntities"].ConnectionString;
             var builder = new EntityConnectionStringBuilder(conectionStringEF);
             var regularConnectionString = builder.ProviderConnectionString;
@@ -43,10 +41,10 @@ namespace CabinetStomatologic.Models.Actions
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        cmd.Parameters.AddWithValue("@date", _addProgramareViewModelParam.StartDate);
+                        cmd.Parameters.AddWithValue("@date", _addProgramareViewModel.StartDate);
                         cmd.Parameters.AddWithValue("@medic", Props.CurentUser);
-                        cmd.Parameters.AddWithValue("@id_pacient", _addProgramareViewModelParam.ID_Pacient);
-                        cmd.Parameters.AddWithValue("@id_interventie", _addProgramareViewModelParam.ID_Interventie);
+                        cmd.Parameters.AddWithValue("@id_pacient", _addProgramareViewModel.ID_Pacient);
+                        cmd.Parameters.AddWithValue("@id_interventie", _addProgramareViewModel.ID_Interventie);
 
 
                         cmd.ExecuteNonQuery();
