@@ -1,4 +1,5 @@
 ﻿using CabinetStomatologic.Commands;
+using CabinetStomatologic.Models.Actions;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,10 +16,11 @@ namespace CabinetStomatologic.ViewModels
 {
     class InterventionsViewModel: BaseViewModel
     {
-        SqlDataAdapter sda;
-        SqlCommandBuilder scb;
-        DataTable dt;
-
+        private InterventionsActions _operations;
+        public InterventionsViewModel()
+        {
+            _operations = new InterventionsActions(this);
+        }
 
         #region Properties
         //==============
@@ -52,40 +54,19 @@ namespace CabinetStomatologic.ViewModels
 
         #region Commands
         //===================
-        public void LoadInterventions(object param)
-        {
-            string conectionStringEF = ConfigurationManager.ConnectionStrings["CabinetStomatologicEntities"].ConnectionString;
-            var builder = new EntityConnectionStringBuilder(conectionStringEF);
-            var regularConnectionString = builder.ProviderConnectionString;
-
-
-            SqlConnection con = new SqlConnection(regularConnectionString);
-            string querry = "SELECT ID, Interventie, Pret, Activ FROM Interventii;";
-
-            sda = new SqlDataAdapter(querry, con);
-            dt = new DataTable();
-            sda.Fill(dt);
-
-            InterventionsDataTable = dt;
-        }
-
         private ICommand _loadInterventions;
         public ICommand LoadInterventionsCommand
         {
             get
             {
                 if (_loadInterventions == null)
-                    _loadInterventions = new RelayCommand(LoadInterventions);
+                {
+                    _loadInterventions = new RelayCommand(_operations.LoadInterventions);
+                }
                 return _loadInterventions;
             }
         }
 
-
-        public void UpdateInterventions(object param)
-        {
-            scb = new SqlCommandBuilder(sda);
-            sda.Update(InterventionsDataTable);
-        }
 
         private ICommand _updateInterventions;
         public ICommand UpdateInterventionsCommand
@@ -93,7 +74,9 @@ namespace CabinetStomatologic.ViewModels
             get
             {
                 if (_updateInterventions == null)
-                    _updateInterventions = new RelayCommand(UpdateInterventions);
+                {
+                    _updateInterventions = new RelayCommand(_operations.UpdateInterventions);
+                }
                 return _updateInterventions;
             }
         }

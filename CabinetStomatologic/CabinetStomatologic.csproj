@@ -65,6 +65,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Actions\AddMedicActions.cs" />
+    <Compile Include="Models\Actions\AddPacientActions.cs" />
+    <Compile Include="Models\Actions\AddProgramareActions.cs" />
+    <Compile Include="Models\Actions\AdminActions.cs" />
+    <Compile Include="Models\Actions\CreateAccountActions.cs" />
+    <Compile Include="Models\Actions\InterventionsActions.cs" />
+    <Compile Include="Models\Actions\LoginActions.cs" />
+    <Compile Include="Models\Actions\MediciActions.cs" />
+    <Compile Include="Models\Actions\PacientiActions.cs" />
+    <Compile Include="Models\Actions\PrivilegesActions.cs" />
+    <Compile Include="Models\Actions\ProgramariActions.cs" />
+    <Compile Include="Models\Actions\programariViewModel.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

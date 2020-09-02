@@ -1,5 +1,6 @@
 ﻿using CabinetStomatologic.Commands;
 using CabinetStomatologic.Models;
+using CabinetStomatologic.Models.Actions;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,10 +16,11 @@ namespace CabinetStomatologic.ViewModels
 {
     class ProgramariViewModel: BaseViewModel
     {
-        SqlDataAdapter sda;
-        //SqlCommandBuilder scb;
-        DataTable dt;
-
+        private ProgramariActions _operations;
+        public ProgramariViewModel()
+        {
+            _operations = new ProgramariActions(this);
+        }
 
         #region Proprieties
         //========================
@@ -47,41 +49,15 @@ namespace CabinetStomatologic.ViewModels
 
         #region Commands
         //=============
-        public void LoadProgramari(object param)
-        {
-            string conectionStringEF = ConfigurationManager.ConnectionStrings["CabinetStomatologicEntities"].ConnectionString;
-            var builder = new EntityConnectionStringBuilder(conectionStringEF);
-            var regularConnectionString = builder.ProviderConnectionString;
-
-            SqlConnection con = new SqlConnection(regularConnectionString);
-            string querry = @"SELECT 
-                            Programari.ID AS ID, 
-                            Programari.DataProgramarii AS DataProgramarii, 
-                            Medici.Nume AS Nume, 
-                            Medici.Prenume AS Prenume, 
-                            Interventii.Interventie AS Interventie, 
-                            Interventii.Pret AS Pret
-
-                            FROM Programari
-
-                            INNER JOIN Medici ON Medici.ID = ID_Medic
-                            INNER JOIN Pacienti ON Pacienti.ID = ID_Pacient
-                            INNER JOIN Interventii ON Interventii.ID = ID_Interventie;";
-
-            sda = new SqlDataAdapter(querry, con);
-            dt = new DataTable();
-            sda.Fill(dt);
-
-            ProgramariDataTable = dt;
-        }
-
         private ICommand _loadProgramari;
         public ICommand LoadProgramariCommand
         {
             get
             {
                 if (_loadProgramari == null)
-                    _loadProgramari = new RelayCommand(LoadProgramari);
+                {
+                    _loadProgramari = new RelayCommand(_operations.LoadProgramari);
+                }
                 return _loadProgramari;
             }
         }

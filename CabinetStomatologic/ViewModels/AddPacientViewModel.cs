@@ -1,5 +1,6 @@
 ﻿using CabinetStomatologic.Commands;
 using CabinetStomatologic.Models;
+using CabinetStomatologic.Models.Actions;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -17,6 +18,11 @@ namespace CabinetStomatologic.ViewModels
 {
     class AddPacientViewModel: BaseViewModel
     {
+        private AddPacientActions _operations;
+        public AddPacientViewModel()
+        {
+            _operations = new AddPacientActions(this);
+        }
         
 
         #region Proprieties
@@ -65,48 +71,15 @@ namespace CabinetStomatologic.ViewModels
 
         #region Commands
         //=================
-        public void Add(object param)
-        {
-            string conectionStringEF = ConfigurationManager.ConnectionStrings["CabinetStomatologicEntities"].ConnectionString;
-            var builder = new EntityConnectionStringBuilder(conectionStringEF);
-            var regularConnectionString = builder.ProviderConnectionString;
-
-            try
-            {
-                using (SqlConnection con = new SqlConnection(regularConnectionString))
-                {
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand("AddPacient", con))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-
-                        cmd.Parameters.AddWithValue("@nume", Nume);
-                        cmd.Parameters.AddWithValue("@prenume", Prenume);
-                        cmd.Parameters.AddWithValue("@medic", Props.CurentUser);
-
-                        cmd.ExecuteNonQuery();
-                    }
-                    con.Close();
-                }
-            }
-            catch(Exception e)
-            {
-                MessageBox.Show("Something went wrong");
-                Debug.WriteLine(e);
-                return;
-            }
-
-            System.Windows.MessageBox.Show("Pacient Added!", "AddPacient", MessageBoxButton.OK, MessageBoxImage.Information);
-
-        }
-
         private ICommand _addPacient;
         public ICommand AddPacientCommand
         {
             get
             {
                 if (_addPacient == null)
-                    _addPacient = new RelayCommand(Add);
+                {
+                    _addPacient = new RelayCommand(_operations.Add);
+                }
                 return _addPacient;
             }
         }

@@ -1,5 +1,6 @@
 ﻿using CabinetStomatologic.Commands;
 using CabinetStomatologic.Models;
+using CabinetStomatologic.Models.Actions;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,11 +16,12 @@ namespace CabinetStomatologic.ViewModels
 {
     class PacientiViewModel: BaseViewModel
     {
-        SqlDataAdapter sda;
-        SqlCommandBuilder scb;
-        DataTable dt;
+        private PacientiActions _operations;
+        public PacientiViewModel()
+        {
+            _operations = new PacientiActions(this);
+        }
 
-        //int ID;
 
         #region Proprieties
         //==================
@@ -45,48 +47,22 @@ namespace CabinetStomatologic.ViewModels
         //==================
         #endregion
 
+
         #region Commands
         //==============
-        public void LoadPacienti(object param)
-        {
-            string conectionStringEF = ConfigurationManager.ConnectionStrings["CabinetStomatologicEntities"].ConnectionString;
-            var builder = new EntityConnectionStringBuilder(conectionStringEF);
-            var regularConnectionString = builder.ProviderConnectionString;
-
-
-            SqlConnection con = new SqlConnection(regularConnectionString);
-            con.Open();
-            using (var cmd = new SqlCommand("getPacienti", con))
-            {
-                dt = new DataTable();
-                using (sda = new SqlDataAdapter(cmd))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@curentuser", Props.CurentUser);
-                    sda.Fill(dt);
-                    PacientiDataTable = dt;
-                }
-            }
-            con.Close();
-        }
-
         private ICommand _loadPacienti;
         public ICommand LoadPacientiCommand
         {
             get
             {
                 if (_loadPacienti == null)
-                    _loadPacienti = new RelayCommand(LoadPacienti);
+                {
+                    _loadPacienti = new RelayCommand(_operations.LoadPacienti);
+                }
                 return _loadPacienti;
             }
         }
 
-
-        public void UpdatePacienti(object param)
-        {
-            scb = new SqlCommandBuilder(sda);
-            sda.Update(PacientiDataTable);
-        }
 
         private ICommand _updatePacienti;
         public ICommand UpdatePacientiCommand
@@ -94,7 +70,9 @@ namespace CabinetStomatologic.ViewModels
             get
             {
                 if (_updatePacienti == null)
-                    _updatePacienti = new RelayCommand(UpdatePacienti);
+                {
+                    _updatePacienti = new RelayCommand(_operations.UpdatePacienti);
+                }
                 return _updatePacienti;
             }
         }

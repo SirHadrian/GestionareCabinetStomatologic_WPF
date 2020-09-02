@@ -1,4 +1,5 @@
 ﻿using CabinetStomatologic.Commands;
+using CabinetStomatologic.Models.Actions;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,9 +17,11 @@ namespace CabinetStomatologic.ViewModels
 {
     class MediciViewModel: BaseViewModel
     {
-        SqlDataAdapter sda;
-        SqlCommandBuilder scb;
-        DataTable dt;
+        private MediciActions _operations;
+        public MediciViewModel()
+        {
+            _operations = new MediciActions(this);
+        }
 
 
         #region Proprieties
@@ -50,42 +53,22 @@ namespace CabinetStomatologic.ViewModels
         //==================
         #endregion
 
+
         #region Commands
         //==============
-        public void LoadMedici(object param)
-        {
-            string conectionStringEF = ConfigurationManager.ConnectionStrings["CabinetStomatologicEntities"].ConnectionString;
-            var builder = new EntityConnectionStringBuilder(conectionStringEF);
-            var regularConnectionString = builder.ProviderConnectionString;
-
-
-            SqlConnection con = new SqlConnection(regularConnectionString);
-            string querry = "SELECT ID, Nume, Prenume FROM Medici";
-
-            sda = new SqlDataAdapter(querry, con);
-            dt = new DataTable();
-            sda.Fill(dt);
-
-            MediciDataTable = dt;
-        }
-
         private ICommand _loadMedici;
         public ICommand LoadMediciCommand
         {
             get
             {
                 if (_loadMedici == null)
-                    _loadMedici = new RelayCommand(LoadMedici);
+                {
+                    _loadMedici = new RelayCommand(_operations.LoadMedici);
+                }
                 return _loadMedici;
             }
         }
 
-
-        public void UpdateMedici(object param)
-        {
-            scb = new SqlCommandBuilder(sda);
-            sda.Update(MediciDataTable);
-        }
 
         private ICommand _updateMedici;
         public ICommand UpdateMediciCommand
@@ -93,56 +76,23 @@ namespace CabinetStomatologic.ViewModels
             get
             {
                 if (_updateMedici == null)
-                    _updateMedici = new RelayCommand(UpdateMedici);
+                {
+                    _updateMedici = new RelayCommand(_operations.UpdateMedici);
+                }
                 return _updateMedici;
             }
         }
 
-        public void DeleteMedic(object param)
-        {
-            if(DeleteThis == null)
-            {
-                MessageBox.Show("Insert a value");
-                return;
-            }
-
-            string conectionStringEF = ConfigurationManager.ConnectionStrings["CabinetStomatologicEntities"].ConnectionString;
-            var builder = new EntityConnectionStringBuilder(conectionStringEF);
-            var regularConnectionString = builder.ProviderConnectionString;
-
-            try
-            {
-                using (SqlConnection con = new SqlConnection(regularConnectionString))
-                {
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand("delMedic", con))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-
-                        cmd.Parameters.AddWithValue("@id", DeleteThis);
-
-                        cmd.ExecuteNonQuery();
-                    }
-                    con.Close();
-                }
-            }
-            catch(Exception e)
-            {
-                Debug.WriteLine("Exception --> " + e);
-                MessageBox.Show("Incorrect value");
-                return;
-            }
-
-            MessageBox.Show("Medic Deleted!");
-        }
-
+        
         private ICommand _deleteMedic;
         public ICommand DeleteMedicCommand
         {
             get
             {
                 if (_deleteMedic == null)
-                    _deleteMedic = new RelayCommand(DeleteMedic);
+                {
+                    _deleteMedic = new RelayCommand(_operations.DeleteMedic);
+                }
                 return _deleteMedic;
             }
         }

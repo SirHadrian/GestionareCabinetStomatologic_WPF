@@ -1,5 +1,6 @@
 ﻿using CabinetStomatologic.Commands;
 using CabinetStomatologic.Models;
+using CabinetStomatologic.Models.Actions;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -17,15 +18,12 @@ namespace CabinetStomatologic.ViewModels
 {
     class AddProgramareViewModel: BaseViewModel
     {
-        SqlDataAdapter sda;
-        //SqlCommandBuilder scb;
-        DataTable dt;
-
-        int ID;
+        private AddProgramareActions _operations;
 
         public AddProgramareViewModel()
         {
             StartDate = DateTime.Now;
+            _operations = new AddProgramareActions(this);
         }
 
         #region Prorieties
@@ -99,77 +97,19 @@ namespace CabinetStomatologic.ViewModels
 
         #region Commands
         //==============
-        public void AddProgramare(object param)
-        {
-            string conectionStringEF = ConfigurationManager.ConnectionStrings["CabinetStomatologicEntities"].ConnectionString;
-            var builder = new EntityConnectionStringBuilder(conectionStringEF);
-            var regularConnectionString = builder.ProviderConnectionString;
-
-            try
-            {
-                using (SqlConnection con = new SqlConnection(regularConnectionString))
-                {
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand("AddProgramari", con))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-
-                        cmd.Parameters.AddWithValue("@date", StartDate);
-                        cmd.Parameters.AddWithValue("@medic", Props.CurentUser);
-                        cmd.Parameters.AddWithValue("@id_pacient", ID_Pacient);
-                        cmd.Parameters.AddWithValue("@id_interventie", ID_Interventie);
-
-
-                        cmd.ExecuteNonQuery();
-                    }
-                    con.Close();
-                }
-            }
-            catch(Exception e)
-            {
-                System.Windows.MessageBox.Show("Incorect values");
-                Debug.WriteLine(e);
-                return;
-            }
-            System.Windows.MessageBox.Show("Programare added!", "AddProgramare", MessageBoxButton.OK, MessageBoxImage.Information);
-
-            //Debug.WriteLine("Executat");
-        }
-
         private ICommand _addProgramare;
         public ICommand AddProgramareCommand
         {
             get
             {
                 if (_addProgramare == null)
-                    _addProgramare = new RelayCommand(AddProgramare);
+                {
+                    _addProgramare = new RelayCommand(_operations.AddProgramare);
+                }
                 return _addProgramare;
             }
         }
 
-
-        public void LoadPacienti(object param)
-        {
-            string conectionStringEF = ConfigurationManager.ConnectionStrings["CabinetStomatologicEntities"].ConnectionString;
-            var builder = new EntityConnectionStringBuilder(conectionStringEF);
-            var regularConnectionString = builder.ProviderConnectionString;
-
-
-            SqlConnection con = new SqlConnection(regularConnectionString);
-            con.Open();
-            using (var cmd = new SqlCommand("getPacienti", con))
-            {
-                dt = new DataTable();
-                using (sda = new SqlDataAdapter(cmd))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@curentuser", Props.CurentUser);
-                    sda.Fill(dt);
-                    PacientiDataTable = dt;
-                }
-            }
-            con.Close();
-        }
 
         private ICommand _loadPacienti;
         public ICommand LoadPacientiCommand
@@ -177,26 +117,13 @@ namespace CabinetStomatologic.ViewModels
             get
             {
                 if (_loadPacienti == null)
-                    _loadPacienti = new RelayCommand(LoadPacienti);
+                {
+                    _loadPacienti = new RelayCommand(_operations.LoadPacienti);
+                }
                 return _loadPacienti;
             }
         }
 
-        public void LoadInterventii(object param)
-        {
-            string conectionStringEF = ConfigurationManager.ConnectionStrings["CabinetStomatologicEntities"].ConnectionString;
-            var builder = new EntityConnectionStringBuilder(conectionStringEF);
-            var regularConnectionString = builder.ProviderConnectionString;
-
-            SqlConnection con = new SqlConnection(regularConnectionString);
-            string querry = "SELECT ID, Interventie, Pret FROM Interventii WHERE Activ = 1;";
-
-            sda = new SqlDataAdapter(querry, con);
-            dt = new DataTable();
-            sda.Fill(dt);
-
-            InterventiiDataTable = dt;
-        }
 
         private ICommand _loadInterventii;
         public ICommand LoadInterventiiCommand
@@ -204,7 +131,9 @@ namespace CabinetStomatologic.ViewModels
             get
             {
                 if (_loadInterventii == null)
-                    _loadInterventii = new RelayCommand(LoadInterventii);
+                {
+                    _loadInterventii = new RelayCommand(_operations.LoadInterventii);
+                }
                 return _loadInterventii;
             }
         }
