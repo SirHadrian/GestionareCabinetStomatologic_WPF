@@ -155,31 +155,20 @@ namespace CabinetStomatologic.ViewModels
             var regularConnectionString = builder.ProviderConnectionString;
 
 
-            using (SqlConnection con = new SqlConnection(regularConnectionString))
+            SqlConnection con = new SqlConnection(regularConnectionString);
+            con.Open();
+            using (var cmd = new SqlCommand("getPacienti", con))
             {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand("getID", con))
+                dt = new DataTable();
+                using (sda = new SqlDataAdapter(cmd))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-
-                    cmd.Parameters.AddWithValue("@username", Props.CurentUser);
-
-                    ID = Convert.ToInt32(cmd.ExecuteScalar());
-
-                    
+                    cmd.Parameters.AddWithValue("@curentuser", Props.CurentUser);
+                    sda.Fill(dt);
+                    PacientiDataTable = dt;
                 }
-
-                string querry = @"SELECT ID, Nume, Prenume, ID_Medic FROM Pacienti
-                            WHERE Pacienti.ID_Medic = (SELECT ID FROM Medici WHERE ID_User = " + ID + ");";
-
-                sda = new SqlDataAdapter(querry, con);
-                dt = new DataTable();
-                sda.Fill(dt);
-
-                PacientiDataTable = dt;
-
-                con.Close();
             }
+            con.Close();
         }
 
         private ICommand _loadPacienti;
@@ -200,7 +189,7 @@ namespace CabinetStomatologic.ViewModels
             var regularConnectionString = builder.ProviderConnectionString;
 
             SqlConnection con = new SqlConnection(regularConnectionString);
-            string querry = "SELECT ID, Interventie, Pret FROM Interventii;";
+            string querry = "SELECT ID, Interventie, Pret FROM Interventii WHERE Activ = 1;";
 
             sda = new SqlDataAdapter(querry, con);
             dt = new DataTable();

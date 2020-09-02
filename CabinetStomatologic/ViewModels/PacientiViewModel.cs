@@ -19,6 +19,7 @@ namespace CabinetStomatologic.ViewModels
         SqlCommandBuilder scb;
         DataTable dt;
 
+        //int ID;
 
         #region Proprieties
         //==================
@@ -54,13 +55,19 @@ namespace CabinetStomatologic.ViewModels
 
 
             SqlConnection con = new SqlConnection(regularConnectionString);
-            string querry = "SELECT ID, Nume, Prenume FROM Pacienti";
-
-            sda = new SqlDataAdapter(querry, con);
-            dt = new DataTable();
-            sda.Fill(dt);
-
-            PacientiDataTable = dt;
+            con.Open();
+            using (var cmd = new SqlCommand("getPacienti", con))
+            {
+                dt = new DataTable();
+                using (sda = new SqlDataAdapter(cmd))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@curentuser", Props.CurentUser);
+                    sda.Fill(dt);
+                    PacientiDataTable = dt;
+                }
+            }
+            con.Close();
         }
 
         private ICommand _loadPacienti;

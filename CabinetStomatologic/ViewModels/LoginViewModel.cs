@@ -323,7 +323,7 @@ namespace CabinetStomatologic.ViewModels
                     if (status == 1)
                     {
                         Props.AdminBtn = Visibility.Visible;
-                        Props.MedicBtn = Visibility.Visible;
+                        Props.MedicBtn = Visibility.Collapsed;
                     }
                     else
                     {
@@ -373,7 +373,7 @@ namespace CabinetStomatologic.ViewModels
             }
         }
 
-
+        /*
         public void Guest(object param)
         {
             Props.CurentUser = "Guest";
@@ -397,7 +397,7 @@ namespace CabinetStomatologic.ViewModels
                 return _guestCommand;
             }
         }
-
+        */
 
         public void CreateAccountB(object param)
         {
