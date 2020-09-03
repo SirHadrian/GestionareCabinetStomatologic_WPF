@@ -8,13 +8,14 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace CabinetStomatologic.Models.Actions
 {
     class PacientiActions
     {
         private SqlDataAdapter _sda;
-        private SqlCommandBuilder _scb;
+        //private SqlCommandBuilder _scb;
         private DataTable _dt;
 
 
@@ -49,10 +50,42 @@ namespace CabinetStomatologic.Models.Actions
         }
 
 
-        public void UpdatePacienti(object param)
+        public void DeletePacienti(object param)
         {
-            _scb = new SqlCommandBuilder(_sda);
-            _sda.Update(_pacientiViewModel.PacientiDataTable);
+            if (_pacientiViewModel.ID == null)
+            {
+                System.Windows.MessageBox.Show("Insert the ID", "Pacienti", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            string conectionStringEF = ConfigurationManager.ConnectionStrings["CabinetStomatologicEntities"].ConnectionString;
+            var builder = new EntityConnectionStringBuilder(conectionStringEF);
+            var regularConnectionString = builder.ProviderConnectionString;
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(regularConnectionString))
+                {
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("delPacient", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("@id", _pacientiViewModel.ID);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                    con.Close();
+                }
+            }
+            catch
+            {
+                System.Windows.MessageBox.Show("Cannot delete, wrong ID");
+                return;
+            }
+
+            _pacientiViewModel.ID = null;
+            System.Windows.MessageBox.Show("Pacient Deleted!", "Pacienti", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

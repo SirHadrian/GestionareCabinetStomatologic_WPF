@@ -32,25 +32,18 @@ namespace CabinetStomatologic.Models.Actions
             var regularConnectionString = builder.ProviderConnectionString;
 
             SqlConnection con = new SqlConnection(regularConnectionString);
-            string querry = @"SELECT 
-                            Programari.ID AS ID, 
-                            Programari.DataProgramarii AS DataProgramarii, 
-                            Medici.Nume AS Nume, 
-                            Medici.Prenume AS Prenume, 
-                            Interventii.Interventie AS Interventie, 
-                            Interventii.Pret AS Pret
-
-                            FROM Programari
-
-                            INNER JOIN Medici ON Medici.ID = ID_Medic
-                            INNER JOIN Pacienti ON Pacienti.ID = ID_Pacient
-                            INNER JOIN Interventii ON Interventii.ID = ID_Interventie;";
-
-            _sda = new SqlDataAdapter(querry, con);
-            _dt = new DataTable();
-            _sda.Fill(_dt);
-
-            _programariViewModel.ProgramariDataTable = _dt;
+            con.Open();
+            using (var cmd = new SqlCommand("getProgramari", con))
+            {
+                _dt = new DataTable();
+                using (_sda = new SqlDataAdapter(cmd))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    _sda.Fill(_dt);
+                    _programariViewModel.ProgramariDataTable = _dt;
+                }
+            }
+            con.Close();
         }
     }
 }

@@ -44,6 +44,20 @@ namespace CabinetStomatologic.ViewModels
                 OnPropertyChanged("PacientiDataTable");
             }
         }
+
+        private string _id = null;
+        public string ID
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                _id = value;
+                OnPropertyChanged("ID");
+            }
+        }
         //==================
         #endregion
 
@@ -64,16 +78,16 @@ namespace CabinetStomatologic.ViewModels
         }
 
 
-        private ICommand _updatePacienti;
-        public ICommand UpdatePacientiCommand
+        private ICommand _deletePacienti;
+        public ICommand DeletePacientiCommand
         {
             get
             {
-                if (_updatePacienti == null)
+                if (_deletePacienti == null)
                 {
-                    _updatePacienti = new RelayCommand(_operations.UpdatePacienti);
+                    _deletePacienti = new RelayCommand(_operations.DeletePacienti);
                 }
-                return _updatePacienti;
+                return _deletePacienti;
             }
         }
         //==============
